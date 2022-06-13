@@ -1,5 +1,5 @@
 # get_salaries_from_tg_messages
-Extract salary from TG messages with vacancy proposal to three columns: salary_from, salary_to and currency.
+Extract salary from TG messages with vacancy proposal to three columns: salary_from, salary_to and currency.  
 Сsv file with column "text" which contains telegram messages is expected.
 
 ## Usage:
