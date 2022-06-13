@@ -45,9 +45,9 @@ PATTERN_3 = re.compile(
 )
 DIGIT_PATTERN = re.compile(r"\d{1,}[,.'’`]?\d*")
 CURRENCY_MAP = (
-    ("usd", re.compile(r"\s?[uU][sS][dD]|\s?доллар|\s?\$")),
-    ("eur", re.compile(r"\s?\€|\s?euro|\s?евро\.?|EUR")),
-    ("rub", re.compile(r".?[р₽т]"))
+    ("usd", re.compile(r"\ ?[uU][sS][dD]|\ ?доллар|\ ?\$")),
+    ("eur", re.compile(r"\ ?\€|\ ?euro|\ ?евро\.?|EUR")),
+    ("rub", re.compile(r".?[р₽т]|\ ?[rR][uU][bB]"))
 )
 
 
@@ -63,7 +63,7 @@ def get_currency(salary_from: float,
     length_of_salary_numbers = [
         len(x) for x in list(map(str, [salary_from, salary_to]))
     ]
-    if any(length_of_salary_numbers) == 4:
+    if length_of_salary_numbers[0] == 4 or length_of_salary_numbers[1] == 4:
         return "usd"
     return "rub"
 
@@ -151,7 +151,7 @@ def load_and_extract(path: str,
 
 if __name__ == "__main__":
     path = ""  # fill the path to csv file
-    df = load_and_extract(path, delimiter=";", write_to_file=False)
+    df = load_and_extract(path, delimiter=";", write_to_file=True)
     if df is not None:
         found_num = df["Index"].count() - df["currency"].isna().sum()
-        print(f"Extracted {found_num} salaries")
+        print(f"Extracted {found_num} salaries.")
